@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+	<!-- tile register -->
+	<definition name="t_base" template="/WEB-INF/view/template.jsp">
+		<put-attribute name="title" value="SPRING WEB"/>	
+		<put-attribute name="nav" value="/WEB-INF/view/nav.jsp"/>
+		<put-attribute name="header" value="/WEB-INF/view/header.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/view/footer.jsp"/>
+	</definition>
+	
+	<definition name="t_join"  extends="t_base">
+		<put-attribute name="title" value="MEMBER"/>	
+		<put-attribute name="section" value="/WEB-INF/view/join.jsp"/>	
+	</definition>
+	<definition name="t_login" extends="t_base">
+		<put-attribute name="title" value="LOGIN"/>	
+		<put-attribute name="section" value="/WEB-INF/view/login.jsp"/>	
+	</definition>
+	<definition name="t_board_list" extends="t_base">
+		<put-attribute name="title" value="BOARD"/>	
+		<put-attribute name="section" value="/WEB-INF/view/board/list.jsp"/>	
+	</definition>
+	
+	
+	
+</tiles-definitions>
