@@ -15,4 +15,10 @@
 	<select id="readOne" resultType="java.util.HashMap"> 
 		select * from member where (id=#{idmail} or email=#{idmail}) and pass=#{pass, jdbcType=VARCHAR } 
 	</select>
+	<select id="getDetail" resultType="java.util.HashMap">
+		select * from member_detail where id=#{id}
+	</select>
+	<update id="updateOneDetail">
+		update member_detail set name=#{name}, gender=#{gender}, birth=#{birth}, address=#{address} where id=#{id}
+	</update>
 </mapper>
