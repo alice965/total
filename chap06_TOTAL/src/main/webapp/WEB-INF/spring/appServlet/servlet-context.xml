@@ -33,12 +33,12 @@
 		<property name="dataSource" ref="ds"/>
 		<property name="mapperLocations">
 			<list>
-			
+				<value>/WEB-INF/mapper/*-mapper.xml</value>
 			</list>
 		</property>
 	</bean>
 	
-	<bean class="org.mybatis.spring.SqlSessionTemplate">
+	<bean class="org.mybatis.spring.SqlSessionTemplate"> 
 		<constructor-arg name="sqlSessionFactory" ref="factory" />
 	</bean>
 	
@@ -46,7 +46,7 @@
 	<bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager">
 		<property name="dataSource" ref="ds" />
 	</bean>
-	
+	 
 	<!-- transaction manager config 설정
 		method / name : dao의 메서드 형태 (add* update*...)  (패턴)
 		rollback-for="Exception"
@@ -65,7 +65,7 @@
 	<bean class="com.fasterxml.jackson.databind.ObjectMapper" />
 	
 	<!-- viewResolver  -->
-	
+	 
 	<!--타일즈 viewResolver  -->
 	<bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
 		<property name="order"  value="1"/>
