@@ -7,43 +7,29 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <div align="center" style="line-height: 25px;">
-	<h2> MY INFO : 
-	</h2>
-	<div>
-		<h3>프로필사진</h3>
-		<form action="/member/pic_update.jsp" method="post" enctype="multipart/form-data">
-			<p>
-				<img src="" style="border-radius: 100%; width: 150px; height: 150px;"/>
-			</p>
-			<p>
-				<input type="file" name="pic"/><button type="submit">변경</button>
-			</p>
-		</form>
+	<h2> MY INFO 	</h2>
+	<div align="center">
+		<h3>프로필관리</h3>
+		<div style="height: 200px; width: 200px;">
+			<img id="pre" src="/" alt="기본이미지" style="width: 100%; height: 100%" />
+		</div>
+		<div style="margin-top: 20px;">
+			<form action="/member/info" method="post"
+				enctype="multipart/form-data" style="display: block;">
+				<input id="profile" type="file" name="profile" style="display: none" />
+				<input type="text" name="nick" />
+				<button type="submit" class="bt">적용</button>
+				<button type="button" class="bt">취소</button>
+			</form>
+		</div>
 	</div>
-	<div>	
-		<h3>세부정보</h3>
-		<form action="/member/my_info_rst.jsp" method="get">
-			<p>
-				<b>NAME</b><br /> <input type="text"
-					value="<c:if test="${map.NAME != null}">  ${map.NAME} </c:if> " name="name" required />
-			</p>
-			<p>
-				<b>GENDER</b><br /> 
-					<input type="radio" name="gender" value="남"
-					<c:if test="${map.GENDER eq '남'}">  "checked" </c:if>
-					required />남 
-					
-					<input
-					type="radio" name="gender" value="여"
-					<c:if test="${map.GENDER eq '여'}">  "checked" </c:if>
-					required />여 
-			</p>
-			
-			<button type="submit">정보변경</button>
-			<a href="/member/drop.jsp"><button type="button">회원탈퇴</button></a>
-		</form>
-	</div>
-</div>
+
+
+<script>
+	document.getElementById("pre").onclick=function() {
+		document.getElementById("profile").click();
+	}
+</script>
 
 
 
@@ -52,4 +38,3 @@
 
 
 
-`

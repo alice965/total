@@ -20,6 +20,10 @@ public class MemberDaoMyBatis {
 		template.insert("member.addDetail", map);
 		return true;
 	}
+	public int upDateOneDetail(Map map) {
+		return template.insert("member.updateOneDetail", map);
+		
+	}
 	
 	public int existOne(Map map) {
 		return template.selectOne("member.checkByIdmailAndPass", map);
