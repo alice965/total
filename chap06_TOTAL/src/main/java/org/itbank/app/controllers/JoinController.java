@@ -1,6 +1,5 @@
 package org.itbank.app.controllers;
 
-import java.sql.SQLException;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -13,16 +12,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @Controller
 public class JoinController {
 	@Autowired
 	MemberDaoMyBatis memberDao;
 
 	@GetMapping(path = "/join")
-	public String joinGetHandle() {
-		return "t_join";
-	}
+	public String joinGetHandle(Model model) {
+		model.addAttribute("section", "join");
+		return "t_expr";
+	}  
 
 	@PostMapping("/join")
 	public String joinPostHandle(@RequestParam Map map, HttpSession session, Model model) {
@@ -33,8 +32,8 @@ public class JoinController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("temp", map);
-			//model.addAttribute("section", "join");
-			return "join";
+			model.addAttribute("section", "join");
+			return "t_expr";
 		}
 	}
 

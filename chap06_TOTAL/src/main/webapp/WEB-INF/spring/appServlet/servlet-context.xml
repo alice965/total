@@ -69,6 +69,9 @@
 	
 	<!-- converter  -->
 	<bean class="com.fasterxml.jackson.databind.ObjectMapper" />
+	<bean class="java.text.SimpleDateFormat">
+		<constructor-arg name="pattern" value="yyyyMMddHHmmss"/>
+	</bean>
 	
 	<!-- viewResolver  -->
 	 
@@ -79,8 +82,7 @@
 	<bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<property name="definitions">
 			<list>
-				<value>/WEB-INF/tiles/tiles-config.xml</value>
-				<value>/WEB-INF/tiles/tiles-config-advance.xml</value>
+				<value>/WEB-INF/config/tiles-config.xml</value>
 			</list>
 		</property>
 	</bean>

@@ -3,40 +3,34 @@ package org.itbank.app.models;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class MemberDaoMyBatis {
-	
 	@Autowired
-	SqlSessionTemplate template;
-	
+	SqlSessionTemplate sql;
+
+	// 데이터베이스 등록
 	public boolean addOne(Map map) {
-		template.insert("member.addBasic", map);
-		template.insert("member.addDetail", map);
+		sql.insert("member.addBasic", map);
+		sql.insert("member.addDetail", map);
 		return true;
 	}
-	public int upDateOneDetail(Map map) {
-		return template.insert("member.updateOneDetail", map);
-		
-	}
-	
-	public int existOne(Map map) {
-		return template.selectOne("member.checkByIdmailAndPass", map);
-	}
-	
-	public HashMap readOne(Map map) {
-		return template.selectOne("member.readOne", map);
-	}
-	public HashMap getDetail(HttpSession session) {
-		return template.selectOne("member.getDetail", session);
-	}
-	//public int checkValid(Map map) {
-	//	return template.insert("member.checkValid", map);
-//	}
 
+	// id나 email이 머고, pass가 머인 데이터가 있는지 확인할때
+	public int existOne(Map map) {
+		return sql.selectOne("member.checkByIdmailAndPass", map);
+	}
+
+	// id나 email이 머고,
+	public HashMap readOneByIdOrEmail(String idmail) {
+		return sql.selectOne("member.readOneByIdOrEmail", idmail);
+	}
+
+	// id나 email이 머고, pass가 머인 데이터가 있는지 확인할때
+	public HashMap readOneById(String id) {
+		return sql.selectOne("member.readOneById", id);
+	}
 }

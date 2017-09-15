@@ -7,25 +7,17 @@ input, button {
 	padding: 5px;
 	font-family: 맑은 고딕;
 }
-
 b {
 	font-size: 12pt;
 }
 </style>
-<header>
-		<t:insertAttribute name="header"/>
-</header>
-
-<nav>
-		<t:insertAttribute name="nav"/>
-</nav>
 <div align="center">
 	<div style="width: 340px;" align="left">
 		<h3>LOGIN TO HUB</h3>
 		<c:if test="${!empty temp }">
 				<b style="color: red">login failed..</b>
 			</c:if>
-		<form action="/session" method="post" autocomplete="off">
+		<form action="/login" method="post" autocomplete="off">
 			<p>
 				<b>ID or Email Address</b><br /> <input type="text" name="idmail"
 					required id="idmail" /><br /> <span id="chk_rst"></span>

@@ -12,13 +12,29 @@
 		select count(*) from member where (id=#{idmail} or email=#{idmail})
 			 and pass=#{pass, jdbcType=VARCHAR }
 	</select>
-	<select id="readOne" resultType="java.util.HashMap"> 
-		select * from member where (id=#{idmail} or email=#{idmail}) and pass=#{pass, jdbcType=VARCHAR } 
+	<select id="readOneByIdOrEmail" resultType="java.util.HashMap">
+		select m.*, d.* from member m join member_detail d on m.id = d.id
+			where (m.id=#{idmail} or m.email=#{idmail})
 	</select>
-	<select id="getDetail" resultType="java.util.HashMap">
-		select * from member_detail where id=#{id}
+	<select id="readOneById" resultType="java.util.HashMap">
+		select m.*, d.* from member m join member_detail d on m.id = d.id
+			where m.id=#{id}
 	</select>
 	<update id="updateOneDetail">
-		update member_detail set name=#{name}, gender=#{gender}, birth=#{birth}, address=#{address} where id=#{id}
+		update detail set name=#{name}, gender=#{gender}, birth=#{birth}, address=#{address} 
+			where id=#{id} 
 	</update>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -11,14 +11,6 @@ b {
 	font-size: 12pt;
 }
 </style>
-<header>
-		<t:insertAttribute name="header"/>
-</header>
-
-<nav>
-		<t:insertAttribute name="nav"/>
-</nav>
-	
 <div align="center">
 	<div style="width: 380px;" align="left">
 		<h3>Join HUB</h3>
@@ -41,7 +33,4 @@ b {
 			<button id="sbt" type="submit">C R E A T E</button>
 		</form>
 	</div>
-</div>
-<div>
-		<t:insertAttribute name="footer"/>
 </div>
