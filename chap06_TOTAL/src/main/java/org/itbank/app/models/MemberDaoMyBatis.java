@@ -22,7 +22,9 @@ public class MemberDaoMyBatis {
 		sql.insert("member.addProfile", id);
 		return true;
 	}
-	
+	public int latestProfile(String id) {
+		return sql.selectOne("member.latestProfile", id);
+	}
 	public List<Map> listProfile(String id){
 		return sql.selectList("member.listProfile", id);
 	}

@@ -46,9 +46,9 @@ public class MemberController {
 	@PostMapping("/profile")
 	public ModelAndView profilePostHandle(@RequestParam(name="profile") 
 			MultipartFile f, HttpSession session, @RequestParam Map param) throws InterruptedException {
-		System.out.println(application.getRealPath("/profiles"));
+		//System.out.println(application.getRealPath("/profiles"));
 		String id = (String)((Map)session.getAttribute("auth")).get("ID");
-		System.out.println("id : "+id);
+		//System.out.println("id : "+id);
 		String fmt = sdf.format(System.currentTimeMillis());
 		String fileName = id+"_"+fmt;
 		System.out.println(application.getRealPath("/profiles"));
@@ -58,6 +58,7 @@ public class MemberController {
 		File dst = new File(application.getRealPath("/profiles"), fileName);
 		System.out.println("파일 만들었음");
 		boolean rst = memberDao.addProfile(id);
+		int data = memberDao.latestProfile(id);
 		System.out.println("rst : " + rst);
 		try {
 			f.transferTo(dst);
@@ -69,6 +70,7 @@ public class MemberController {
 		
 		mav.addObject("rst", rst);
 		mav.addObject("uri", uri);
+		mav.addObject("data", data);
 		return mav;
 	}
 

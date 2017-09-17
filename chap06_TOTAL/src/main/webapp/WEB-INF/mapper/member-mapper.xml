@@ -11,6 +11,10 @@
 	<insert id="addProfile">
 		insert into profile values(profile_seq.nextval, #{id}, #{uri}, sysdate)
 	</insert>
+	<select id="latestProfile" resultType="java.lang.Integer">
+		select * from(select * from profile where id = #{id} order by regdate desc)where rownum=1;
+	</select>
+	
 	<select id="listProfile" resultType="java.util.HashMap">
 		select * from profile where id= #{id} order by regdate desc
 	</select>
