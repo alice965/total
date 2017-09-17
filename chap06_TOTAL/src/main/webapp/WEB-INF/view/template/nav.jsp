@@ -12,6 +12,7 @@
 			</p>
 			<p>
 				<a href="/my/info">내정보</a> | <a href="/my/profile">프로필</a>
+				| <a href="/board/list">게시판</a>
 			</p>
 		</c:otherwise>
 	</c:choose>

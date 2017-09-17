@@ -16,12 +16,10 @@ public class LoginAuthFilter extends HttpFilter  {
 		if(request.getSession().getAttribute("auth") == null) {
 			String uri = request.getRequestURI();
 			if(uri.startsWith("/my") ) {
-				
 			}
 		}
 		chain.doFilter(request, response);
 	}
-
 	@Override
 	public void destroy() {
 		
