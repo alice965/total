@@ -1,6 +1,7 @@
 package org.itbank.app.controllers;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,14 +27,20 @@ public class BoardController {
 	BoardDaoMyBatis bDAO;
 
 	@RequestMapping("/list")
-	public ModelAndView boardListHandle() throws SQLException {
-		List<Map> list = bDAO.readAll();
+	public ModelAndView boardListHandle(@RequestParam(name="page", defaultValue="1" ) int page) throws SQLException {
+		List<Map> listAll = bDAO.readAll();
+		int psize = bDAO.countListPage();
+		
+		Map p = new HashMap();
+			p.put("start", (page-1)*10+1);
+			p.put("end", page*10);
+		
 		ModelAndView mav = new ModelAndView("t_expr");
-		// mav.setViewName("t_board_list");
-		// mav.setViewName("tw_°Ô½ÃÆÇ/board/list");
 		mav.addObject("section", "board/list");
-		mav.addObject("list", list);
-		mav.addObject("cnt", list.size());
+		mav.addObject("list", bDAO.listPage(p));
+		mav.addObject("listAll", listAll);
+		mav.addObject("cnt", listAll.size());
+		mav.addObject("size",psize/10);
 		return mav;
 	}
 

@@ -2,7 +2,9 @@ package org.itbank.app.controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,44 +35,46 @@ public class MemberController {
 
 	@GetMapping("/profile")
 	public ModelAndView profileHandle(HttpSession session) {
-		String id = (String)((Map)session.getAttribute("auth")).get("ID");
-		List<Map> list=memberDao.listProfile(id);
-		
 		ModelAndView mav = new ModelAndView("t_expr");
+
+		String id = (String) session.getAttribute("auth_id");
+		List<Map> list=memberDao.listProfile(id);
+		Map pic = memberDao.latestProfile(id);
 		mav.addObject("section", "my/profile");
 		mav.addObject("list", list);
+		mav.addObject("pic", pic);
 		return mav;
 	}
 
 	@SuppressWarnings("rawtypes")
 	@PostMapping("/profile")
 	public ModelAndView profilePostHandle(@RequestParam(name="profile") 
-			MultipartFile f, HttpSession session, @RequestParam Map param) throws InterruptedException {
-		//System.out.println(application.getRealPath("/profiles"));
-		String id = (String)((Map)session.getAttribute("auth")).get("ID");
-		//System.out.println("id : "+id);
+			MultipartFile f, HttpSession session) throws InterruptedException {
+	
+		String id = (String) session.getAttribute("auth_id");
+		boolean rst = false;
 		String fmt = sdf.format(System.currentTimeMillis());
 		String fileName = id+"_"+fmt;
-		System.out.println(application.getRealPath("/profiles"));
-		String uri = application.getRealPath("/profiles") +"/"+ fileName ;
-		System.out.println("uri : " + uri);
-		
-		File dst = new File(application.getRealPath("/profiles"), fileName);
-		System.out.println("파일 만들었음");
-		boolean rst = memberDao.addProfile(id);
-		int data = memberDao.latestProfile(id);
-		System.out.println("rst : " + rst);
 		try {
+			if(f.isEmpty())
+				throw new Exception();
+			File dst = new File(application.getRealPath("/profiles"), fileName);
 			f.transferTo(dst);
-			rst =! rst;
+			rst = !rst;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		ModelAndView mav = new ModelAndView("redirect:/my/profile");
+		if(rst) {
+			Map data = new HashMap<>();
+			data.put("id", id);
+			data.put("uri", "/profiles/"+fileName);
+			memberDao.addProfile(data);
+		}
 		
+		
+		ModelAndView mav = new ModelAndView("redirect:/my/profile");
 		mav.addObject("rst", rst);
-		mav.addObject("uri", uri);
-		mav.addObject("data", data);
+		
 		return mav;
 	}
 
@@ -84,6 +88,26 @@ public class MemberController {
 	@PostMapping("/info")
 	public String infoPostHandle() {
 		return "t_expr";
+	}
+	
+	@RequestMapping("/list")
+	public ModelAndView boardListHandle(@RequestParam(name="page", defaultValue="1") int page ) 
+						throws SQLException {
+		List<Map> list = memberDao.list();
+		
+		int psize = memberDao.countListPage();
+		Map p = new HashMap();
+			p.put("start", (page-1)*5+1);
+			p.put("end", page*5);
+		
+		ModelAndView mav = new ModelAndView("t_expr");
+		mav.addObject("section", "my/list");
+		mav.addObject("list", memberDao.listPage(p));
+		mav.addObject("cnt", list.size());
+		mav.addObject("size",psize/5);
+		
+		
+		return mav;
 	}
 
 }

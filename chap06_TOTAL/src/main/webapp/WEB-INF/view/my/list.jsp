@@ -13,27 +13,35 @@ th, td {
 }
 </style>
 <div align="center" style="line-height: 35px">
-	<h2>게시판</h2>
+	<h2>회원 목록</h2>
 	<p align="right" style="margin-right: 30px;">
-		총 <b>${cnt }</b> 개의 글이 등록되어있습니다.
+		총 <b>${cnt }</b> 명의 회원이 등록되어있습니다.
 	</p>
 	<table style="width: 95%">
 		<thead>
 			<tr>
-				<th style="width: 10%">글번호</th>
-				<th style="width: 60%">글제목</th>
-				<th style="width: 20%">작성자</th>
-				<th style="width: 10%">조회수</th>
+				<th style="width: 30%">프로필</th>
+				<th style="width: 30%">아이디</th>
+				<th style="width: 40%">이메일</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach var="obj" items="${list }">
 				<tr>
-					<td>${obj.NUM }</td>
-					<td><a href="/board/view/${obj.NUM}">${fn:substring(obj.TITLE, 0, 12) }
-					</a><c:if test="${obj.REPLCNT != null}">  [ ${obj.REPLCNT} ] </c:if></td>
-					<td>${obj.WRITER }</td>
-					<td><fmt:formatNumber value="${obj.COUNT }" pattern="#,###" />
+					<td>
+						<c:choose>
+							<c:when test="${empty obj.URI }">
+									<img id="pre" src="/profiles/default.png" alt="기본이미지"
+										style="width: 50px; height: 50px; border-radius: 10%;" />
+							</c:when>
+							<c:otherwise>
+									<img id="pre" src="${obj.URI }" alt="사용자프로필"
+										style="width: 50px; height:50px; border-radius: 10%;" />
+							</c:otherwise>
+						</c:choose>
+					</td>
+					<td>${obj.ID }</td>
+					<td>${obj.EMAIL }</td>
 					</td>
 				</tr>
 			</c:forEach>
@@ -41,10 +49,8 @@ th, td {
 	</table>
 	<div>
 		<c:forEach var="i" begin="1" end="${size }" varStatus="vs">
-			<a href="/board/list?page=${i }">${i }</a> <c:if test="${!vs.last }"> | </c:if>
+			<a href="/my/list?page=${i }">${i }</a> <c:if test="${!vs.last }"> | </c:if>
 		</c:forEach>
 	</div>
-	<p align="right" style="margin-right: 30px;">
-		<a href="/board/add"><button type="button" style="padding: 5px;">글작성</button></a>
-	</p>
+	
 </div>

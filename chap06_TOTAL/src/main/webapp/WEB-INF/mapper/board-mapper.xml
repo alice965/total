@@ -19,4 +19,13 @@
 	<select id="readOne" resultType="java.util.HashMap">
 		select * from board where num = #{num}
 	</select>
+	<select id="listPage" resultType="java.util.HashMap">
+		select * from (
+			select rownum as r, b.*  from(
+				select *  from board order by writedate desc) b	
+				) where r between #{start} and #{end }
+	</select>
+	<select id="countListPage" resultType="java.lang.Integer">
+		select count(*) as cnt from board	
+	</select>
   </mapper>
