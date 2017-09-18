@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="product">
+	
+	<!-- 경매상품 등록 -->
+	<insert id="addProduct">
+		insert into product values(product_seq.nextval,#{pname}, #{sprice}, #{bprice, jdbcType=NUMERIC}, #{edate, jdbcType=DATE})
+	</insert>
+
+	<!-- 경매상품 목록 -->
+	<select id="listProduct" resultType="java.util.HashMap">
+		select p.edate-sysdate as gab, p.* from product p
+	</select>
+	
+	<!-- 검색:  -->
+	<select id="searchBySprice1" resultType="java.util.HashMap">
+		select * from product where sprice &lt; #{sprice}
+	</select>
+	<select id="searchBySprice2" resultType="java.util.HashMap">
+		<![CDATA[
+			select * from product where sprice < #{sprice} and eprice is not null
+		]]>
+	</select>
+	<select id="searchBySprice" resultType="java.util.HashMap">
+		select * from product where sprice &lt; #{sprice}
+		<if test="mode != null">
+			 and bprice is not null
+		</if>
+	</select>
+	<select id="readOne" resultType="java.util.HashMap">
+		select p.edate-sysdate as gab, p.* from product p where no = #{no}
+		<!--   select * from product where no = #{no} -->
+	</select>
+	
+</mapper>

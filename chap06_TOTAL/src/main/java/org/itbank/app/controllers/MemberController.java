@@ -3,6 +3,7 @@ package org.itbank.app.controllers;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -31,33 +32,45 @@ public class MemberController {
 	SimpleDateFormat sdf;
 
 	@GetMapping("/profile")
-	public ModelAndView profileHandle() {
-		ModelAndView mav = new ModelAndView("t_expr");
+	public ModelAndView profileHandle(HttpSession session) {
+		String id = (String)((Map)session.getAttribute("auth")).get("ID");
+		List<Map> list=memberDao.listProfile(id);
 		
-
+		ModelAndView mav = new ModelAndView("t_expr");
 		mav.addObject("section", "my/profile");
+		mav.addObject("list", list);
 		return mav;
 	}
 
 	@SuppressWarnings("rawtypes")
 	@PostMapping("/profile")
-	public ModelAndView profilePostHandle(@RequestParam(name="profile") MultipartFile f, 
-																			HttpSession session) 
-					throws InterruptedException {
-		System.out.println(application.getRealPath("/profiles"));
+	public ModelAndView profilePostHandle(@RequestParam(name="profile") 
+			MultipartFile f, HttpSession session, @RequestParam Map param) throws InterruptedException {
+		//System.out.println(application.getRealPath("/profiles"));
 		String id = (String)((Map)session.getAttribute("auth")).get("ID");
+		//System.out.println("id : "+id);
 		String fmt = sdf.format(System.currentTimeMillis());
 		String fileName = id+"_"+fmt;
+		System.out.println(application.getRealPath("/profiles"));
+		String uri = application.getRealPath("/profiles") +"/"+ fileName ;
+		System.out.println("uri : " + uri);
+		
 		File dst = new File(application.getRealPath("/profiles"), fileName);
-		boolean rst = false;
+		System.out.println("파일 만들었음");
+		boolean rst = memberDao.addProfile(id);
+		int data = memberDao.latestProfile(id);
+		System.out.println("rst : " + rst);
 		try {
 			f.transferTo(dst);
-			rst = !rst;
+			rst =! rst;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		ModelAndView mav = new ModelAndView("redirect:/my/profile");
+		
 		mav.addObject("rst", rst);
+		mav.addObject("uri", uri);
+		mav.addObject("data", data);
 		return mav;
 	}
 

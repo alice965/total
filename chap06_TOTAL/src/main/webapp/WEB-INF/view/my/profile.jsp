@@ -32,6 +32,13 @@
 			</form>
 		</div>
 	</div>
+	<div>
+		<h4>--- 프로필 히스토리 ---</h4>
+		<c:forEach var="obj" items="${list }">
+			${obj.NUM}<br>${obj.URI}<br>
+			<img src="${obj.URI}"/><br>
+		</c:forEach>
+	</div>
 </div>
 <script>
 	document.getElementById("sbt").onclick = function(){

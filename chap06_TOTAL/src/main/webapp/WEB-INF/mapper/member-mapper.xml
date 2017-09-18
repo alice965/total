@@ -8,6 +8,16 @@
 	<insert id="addDetail">
 		insert into member_detail(id) values (#{id})		
 	</insert>
+	<insert id="addProfile">
+		insert into profile values(profile_seq.nextval, #{id}, #{uri}, sysdate)
+	</insert>
+	<select id="latestProfile" resultType="java.lang.Integer">
+		select * from(select * from profile where id = #{id} order by regdate desc)where rownum=1;
+	</select>
+	
+	<select id="listProfile" resultType="java.util.HashMap">
+		select * from profile where id= #{id} order by regdate desc
+	</select>
 	<select id="checkByIdmailAndPass" resultType="java.lang.Integer">
 		select count(*) from member where (id=#{idmail} or email=#{idmail})
 			 and pass=#{pass, jdbcType=VARCHAR }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  <mapper namespace="reply" >
+  	<!-- 댓글 추가 -->
+  	<insert id="createOne" parameterType ="java.util.HashMap">
+  		insert into reply values(reply_seq.nextval,#{parent}, #{writer}, #{content}, #{pass})
+  	</insert>
+  	
+  	<!-- 댓글 리스트 -->
+  	<select id="readSome"  resultType="java.util.HashMap">
+  		select * from reply where parent=#{parent} order by num asc
+  	</select>
+  	
+  </mapper>
