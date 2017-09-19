@@ -39,6 +39,11 @@ th, td {
 			</c:forEach>
 		</tbody>
 	</table>
+	<div>
+		<c:forEach var="i" begin="1" end="${size }" varStatus="vs">
+			<a href="/board/list?page=${i }">${i }</a> <c:if test="${!vs.last }"> | </c:if>
+		</c:forEach>
+	</div>
 	<p align="right" style="margin-right: 30px;">
 		<a href="/board/add"><button type="button" style="padding: 5px;">글작성</button></a>
 	</p>

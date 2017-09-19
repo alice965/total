@@ -12,13 +12,14 @@
 	<div>
 		<div style="height: 200px; width: 200px;">
 			<c:choose>
-				<c:when test="${empty data.URI }">
+				<c:when test="${empty pic.URI }">
 					<img id="pre" src="/profiles/default.png" alt="기본이미지"
 						style="width: 100%; height: 100%; border-radius: 10%;" />
 				</c:when>
 				<c:otherwise>
-					<img id="pre" src="${data.URI }" alt="사용자프로필"
-						style="width: 100%; height: 100%" />
+					<img id="pre" src="${pic.URI }" alt="사용자프로필"
+						style="width: 100%; height: 100%; border-radius: 10%;"/>
+						
 				</c:otherwise>
 			</c:choose>
 		</div>
@@ -35,8 +36,9 @@
 	<div>
 		<h4>--- 프로필 히스토리 ---</h4>
 		<c:forEach var="obj" items="${list }">
-			${obj.NUM}<br>${obj.URI}<br>
-			<img src="${obj.URI}"/><br>
+			${obj.NUM}<br>
+			<img src="${obj.URI}" style="width: 40%; height: 40%; border-radius: 10%;" /><br>
+			<button type="button" class="del" id="del">삭제</button><br>
 		</c:forEach>
 	</div>
 </div>

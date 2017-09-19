@@ -18,11 +18,12 @@ public class MemberDaoMyBatis {
 		sql.insert("member.addDetail", map);
 		return true;
 	}
-	public boolean addProfile(String id) {
-		sql.insert("member.addProfile", id);
+	public boolean addProfile(Map map) {
+		System.out.println(map);
+		sql.insert("member.addProfile", map);
 		return true;
 	}
-	public int latestProfile(String id) {
+	public Map latestProfile(String id) {
 		return sql.selectOne("member.latestProfile", id);
 	}
 	public List<Map> listProfile(String id){
@@ -42,4 +43,14 @@ public class MemberDaoMyBatis {
 		return sql.selectOne("member.readOneById", id);
 	}
 	
+	public List<Map> list(){
+		return sql.selectList("member.list");
+	}
+	
+	public List<Map> listPage(Map map){
+		return sql.selectList("member.listPage", map);
+	}
+	public int countListPage() {
+		return sql.selectOne("member.countListPage");
+	}
 }

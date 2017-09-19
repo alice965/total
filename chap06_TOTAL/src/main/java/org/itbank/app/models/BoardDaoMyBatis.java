@@ -24,6 +24,13 @@ public class BoardDaoMyBatis {
 		return template.selectOne("board.readOne", num);
 	}
 	
+	public List<Map> listPage(Map map){
+		return template.selectList("board.listPage", map);
+	}
+	public int countListPage() {
+		return template.selectOne("board.countListPage");
+	}
+	
 	
 
 }

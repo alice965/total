@@ -11,8 +11,8 @@
 	<insert id="addProfile">
 		insert into profile values(profile_seq.nextval, #{id}, #{uri}, sysdate)
 	</insert>
-	<select id="latestProfile" resultType="java.lang.Integer">
-		select * from(select * from profile where id = #{id} order by regdate desc)where rownum=1;
+	<select id="latestProfile" resultType="java.util.HashMap">
+		select * from(select * from profile where id = #{id} order by regdate desc)where rownum=1
 	</select>
 	
 	<select id="listProfile" resultType="java.util.HashMap">
@@ -34,6 +34,27 @@
 		update detail set name=#{name}, gender=#{gender}, birth=#{birth}, address=#{address} 
 			where id=#{id} 
 	</update>
+	
+	<select id="list" resultType="java.util.HashMap">
+		select m.*, p.* from member m left join
+   			 (select id, max(URI) as URI from profile group by id) p on m.id = p.id
+		order by m.id asc
+	</select>
+	<select id="listPage" resultType="java.util.HashMap">
+		select * from (
+			select rownum as r, t.* from(
+				select m.*, p.URI  from member m left join
+   					(select id, max(URI) as URI from profile group by id) p on m.id = p.id
+					order by m.id asc
+			) t 
+		) where r between #{start} and #{end }
+	</select>
+	<select id="countListPage" resultType="java.lang.Integer">
+		select count(*) as cnt from member m left join
+   			(select id, max(URI) as URI from profile group by id) p on m.id = p.id
+				order by m.id asc
+	</select>
+	
 </mapper>
 
 
