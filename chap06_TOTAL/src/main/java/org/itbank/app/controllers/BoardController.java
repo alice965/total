@@ -30,17 +30,20 @@ public class BoardController {
 	public ModelAndView boardListHandle(@RequestParam(name="page", defaultValue="1" ) int page) throws SQLException {
 		List<Map> listAll = bDAO.readAll();
 		int psize = bDAO.countListPage();
-		
+		int size = psize/5;
+			if(psize%5 >0)
+				size++;
+			
 		Map p = new HashMap();
-			p.put("start", (page-1)*10+1);
-			p.put("end", page*10);
+			p.put("start", (page-1)*5+1);
+			p.put("end", page*5);
 		
 		ModelAndView mav = new ModelAndView("t_expr");
 		mav.addObject("section", "board/list");
 		mav.addObject("list", bDAO.listPage(p));
 		mav.addObject("listAll", listAll);
 		mav.addObject("cnt", listAll.size());
-		mav.addObject("size",psize/10);
+		mav.addObject("size",size);
 		return mav;
 	}
 

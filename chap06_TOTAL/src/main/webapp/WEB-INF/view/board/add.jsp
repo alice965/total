@@ -4,9 +4,7 @@
 <%@ page import= "java.util.*" %>
 <%@ page import="java.io.*"%>
 
-<%
-String sid = (String) session.getAttribute("auth");
-%>
+
 
 
 <div align="center" style="line-height: 25px;">

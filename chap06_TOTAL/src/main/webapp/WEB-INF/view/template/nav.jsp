@@ -3,8 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div align="right">
 	<c:choose>
-		<c:when test="${empty auth }">
-			<a href="/login">로그인</a> | <a href="/join">회원가입</a>
+		<c:when test="${empty auth_id }">
+			<a href="/login">Log In</a> | <a href="/join">Join</a> | <a href="/chat">Chat</a>
 		</c:when>
 		<c:otherwise>
 			<p>

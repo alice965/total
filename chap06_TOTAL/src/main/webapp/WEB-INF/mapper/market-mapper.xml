@@ -12,7 +12,7 @@
 
 	<!-- 경매상품 목록 -->
 	<select id="listProduct" resultType="java.util.HashMap">
-		select p.edate-sysdate as gab, p.* from product p
+		select p.edate-sysdate as gab, p.* from product p order by no desc
 	</select>
 	
 	<!-- 검색:  -->
