@@ -49,12 +49,24 @@ th, td {
 	</table>
 	<div>
 		<c:if test="${param.page ne 1 }">
-			<a href="/info/mlist?page=${param.page -1 }" style="text-decoration: none"
-						><b style="color: #9c9892;">◀</b></a>	
+
+			<a href="/info/mlist?page=${param.page -1 }" style="text-decoration: none">
+				<b style="color: #9c9892;">◀</b>
+			</a>	
 		</c:if>
 		<c:forEach var="i" begin="1" end="${size }" varStatus="vs">
-			<a href="/my/list?page=${i }">${i }</a> <c:if test="${!vs.last }"> | </c:if>
+			<c:choose>
+				<c:when test="${i eq param.page }">
+					<b style="color: #ff9800;">${i }</b>
+				</c:when>
+				<c:otherwise>
+					<a href="/my/list?page=${i }" style="text-decoration: none">
+					<b style="color: #9c9892;">${i }</b></a>	
+				</c:otherwise>
+			</c:choose>
+			<c:if test="${!vs.last }"> | </c:if>
 		</c:forEach>
+		<c:if test="${param.page ne last }">▷</c:if>
 	</div>
 	
 </div>

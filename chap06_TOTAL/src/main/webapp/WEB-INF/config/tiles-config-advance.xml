@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- Wildcard support -->
+	<definition name="tw_*/*" extends="t_base">
+		<put-attribute name="title" value="{1}" />
+		<put-attribute name="section" value="/WEB-INF/view/{2}.jsp" />
+	</definition>
+	<definition name="tw_*/*/*" extends="t_base">
+		<put-attribute name="title" value="{1}" />
+		<put-attribute name="section" value="/WEB-INF/view/{2}/{3}.jsp" />
+	</definition>
+	<!-- el support 게시판 이걸로-->
+	<definition name="t_expr" extends="t_base">
+		<put-attribute name="section" 	expression="/WEB-INF/view/${section}.jsp" />
+	</definition>
+	<!-- nested template support 마켓 이걸로-->
+	<definition name="t_m_expr" extends="t_base">
+		<put-attribute name="title" value="경매-HUB"/>
+		<put-attribute name="section">
+			<definition template="/WEB-INF/view/template/template_sub.jsp">
+				<put-attribute name="m_nav" value="/WEB-INF/view/market/nav.jsp" />
+				<put-attribute name="m_section" expression="/WEB-INF/view/${section}.jsp" />
+			</definition>
+		</put-attribute>
+	</definition>
+	
+</tiles-definitions>
+
+
+
+
+
+
+
+
+
+
+
