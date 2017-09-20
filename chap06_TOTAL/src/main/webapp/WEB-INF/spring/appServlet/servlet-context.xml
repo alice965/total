@@ -21,13 +21,17 @@
 	
 	<!-- Websocket handler -->
 	<bean class="org.itbank.app.controller.ws.BasicWSHandler" id="bws"/>
-	<bean class="org.itbank.app.controller.ws.ChatWsHandler" id="cws"/>
-	<bean class="org.itbank.app.controller.ws.AlertWSHandler" id="aws"/>
+	<!--<bean class="org.itbank.app.controller.ws.ChatWsHandler" id="cws"/>
+	<bean class="org.itbank.app.controller.ws.AlertWSHandler" id="aws"/>-->
 	
 	<websocket:handlers>
 		<websocket:mapping handler="bws" path="/ws/basic"/>
 		<websocket:mapping handler="cws" path="/ws/chat"/>
 		<websocket:mapping handler="aws" path="/ws/alert"/>
+		<websocket:mapping handler="lws" path="/ws/login"/>
+		<websocket:handshake-interceptors>
+			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+		</websocket:handshake-interceptors>
 	</websocket:handlers>
 	
 	

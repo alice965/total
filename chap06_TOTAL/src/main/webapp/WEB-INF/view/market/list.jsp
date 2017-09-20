@@ -35,7 +35,7 @@ th, td {
 					<td>${obj.NO }</td>
 					<td><a href="/market/view/${obj.NO}">${fn:substring(obj.PNAME, 0, 12) }
 					</a></td>
-					<td><fmt:formatNumber value="${obj.SPRICE }" pattern="#,###" /></td>
+					<td ><fmt:formatNumber value="${obj.SPRICE }" pattern="#,###" /></td>
 					<td><fmt:formatNumber value="${obj.BPRICE }" pattern="#,###" /></td>
 					<td><c:if test="${!empty obj.EDATE }">~<fmt:formatDate
 								value="${obj.EDATE }" pattern="yyyy.MM.dd" />

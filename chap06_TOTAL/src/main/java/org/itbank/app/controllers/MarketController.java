@@ -48,13 +48,18 @@ public class MarketController {
 	
 	@RequestMapping("/list")
 	   public ModelAndView readAllList(HttpSession session){
+		  List<Map> list = mDAO.listProduct();
+		  int psize = mDAO.countListPage();
+			int size = psize/5;
+				if(psize%5 >0)
+					size++;
+		  
+		  
 	      ModelAndView mav = new ModelAndView("t_m_expr");
-	     // System.out.println(session.getAttribute("auth"));
-	      List<Map> list = mDAO.listProduct();
-	      //map.put("marketList", list);
 	      mav.addObject("list", list);
 	      mav.addObject("cnt", list.size());
 	      mav.addObject("section", "market/list");
+	      mav.addObject("size",size);
 	      return mav;
 	   }
 	

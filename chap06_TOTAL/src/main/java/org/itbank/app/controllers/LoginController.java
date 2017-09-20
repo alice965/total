@@ -45,7 +45,7 @@ public class LoginController {
 			mav.addObject("section", "login");
 			mav.addObject("temp", "temp");
 			/*
-			mav.setViewName("redirect:/login");
+			mav.setViewName("redirewct:/login");
 			mav.addObject("mode", "f");
 			*/
 		}
@@ -78,6 +78,34 @@ public class LoginController {
 		//mav.addObject("rst", rst);
 		return mav;
 	}
+=======
+	@RequestMapping("/logout")
+	   public ModelAndView logoutHandle(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
+	      session.invalidate();
+	      
+	      Cookie[] ar= request.getCookies();
+	      Map<String, String> ckmap = new HashMap<>();
+	      if(ar != null) {
+	          for(Cookie c:ar) {
+	             ckmap.put(c.getName(), c.getValue());
+	          }
+	          
+	          if(ckmap.containsKey("auth")) {
+	            Cookie c = new Cookie("auth","1");
+	            c.setMaxAge(0);
+	            c.setPath("/");
+	            response.addCookie(c);
+	            
+	          }
+	      }else {
+	          System.out.println("ÄíÅ°»èÁ¦¾ÈµÊ....");
+	      }
+	      
+	      ModelAndView mav = new ModelAndView("redirect:/");
+	      //mav.addObject("rst", rst);
+	      return mav;
+	   }
+>>>>>>> branch 'master' of https://github.com/alice965/total.git
 }
 
 

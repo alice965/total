@@ -19,6 +19,9 @@ public class MarketDaoMyBatis {
 	public List<Map> listProduct() {
 		return template.selectList("product.listProduct");
 	}
+	public int countListPage() {
+		return template.selectOne("product.countListPage");
+	}
 
 	public List<Map> searchSome(Map p) {
 		return template.selectList("product.searchBySprice", p);
