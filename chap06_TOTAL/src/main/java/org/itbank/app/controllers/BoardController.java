@@ -62,11 +62,8 @@ public class BoardController {
 	public String boardAddPostHandle(@RequestParam Map param, ModelMap map) throws SQLException {
 		int rst = bDAO.createOne(param);
 		if (rst == 1) {
-<<<<<<< HEAD
 			aws.sendMessage("게시판에 새로운 글이 등록되었습니다."); 
-=======
 			aws.sendMessage("새로운 글이 등록되었습니다."); 
->>>>>>> branch 'master' of https://github.com/alice965/total.git
 			map.put("section", "board/list");
 			return "redirect:/board/list";
 		}

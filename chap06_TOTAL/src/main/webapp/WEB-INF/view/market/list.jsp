@@ -22,11 +22,12 @@ th, td {
 		<thead>
 			<tr>
 				<th style="width: 10%">번호</th>
-				<th style="width: 35%">물품명</th>
+				<th style="width: 25%">물품명</th>
 				<th style="width: 10%">시작가</th>
 				<th style="width: 10%">즉구가</th>
 				<th style="width: 15%">종료일</th>
 				<th style="width: 10%">남은기간</th>
+				<th style="width: 10%">등록인</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -43,6 +44,7 @@ th, td {
 					<td><c:if test="${!empty obj.GAB }">(<fmt:formatNumber
 								value="${obj.GAB }" pattern="#,##0.00" />일 남음)
 					</c:if></td>
+					<td>${obj.ID }</td>
 				</tr>
 			</c:forEach>
 		</tbody>

@@ -22,7 +22,7 @@
 </div>
 <c:if test="${!empty auth }">
    <script>
-      var userws = new WebSocket("ws://192.168.10.78/ws/login");
+      var userws = new WebSocket("ws://192.168.219.101/ws/login");
       userws.onmessage=function(e){
          console.log(e.data);
          var obj = JSON.parse(e.data);
@@ -33,6 +33,12 @@
                location.href="/memo/list";
             }
             break;
+         case "auction" :
+        	 var msg ="["+obj.bidder + "]"+" 님께서 입찰하셨습니다.";
+        	 if(window.confirm(msg)){
+                 location.href="/market/list";
+              }
+              break;
          }
       } 
    </script>

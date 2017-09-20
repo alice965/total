@@ -7,7 +7,7 @@
 	
 	<!-- 경매상품 등록 -->
 	<insert id="addProduct">
-		insert into product values(product_seq.nextval,#{pname}, #{sprice}, #{bprice, jdbcType=NUMERIC}, #{edate, jdbcType=DATE})
+		insert into product values(product_seq.nextval,#{pname}, #{sprice}, #{bprice, jdbcType=NUMERIC}, #{edate, jdbcType=DATE}, #{id})
 	</insert>
 
 	<!-- 경매상품 목록 -->

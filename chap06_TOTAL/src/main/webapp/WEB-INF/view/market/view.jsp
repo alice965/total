@@ -26,7 +26,9 @@ input, textarea, button {
 				<input type="hidden" id="no" value="${pmap.NO }" />
 				<h3>경매 물품 : ${pmap.PNAME }</h3>
 				<p style="padding-left: 10px;">
-					시작가 : <fmt:formatNumber value="${pmap.SPRICE }" pattern="#,###" /> 원 <br>
+					경매번호 : ${pmap.NO }<br>
+					등록인 : ${pmap.ID}<br>
+					시작가 : <fmt:formatNumber value="${pmap.SPRICE }" pattern="#,###"  /> 원 <br>
 					즉구가 : <fmt:formatNumber value="${pmap.BPRICE }" pattern="#,###" /> 원<br>
 					 종료일 : <fmt:formatDate
 							pattern="YYYY.MM.dd" value="${pmap.EDATE }" /> <br>
@@ -38,7 +40,60 @@ input, textarea, button {
 		</c:otherwise>
 	</c:choose>
 	<hr />
+	<h2>입찰하기</h2>
+	입찰가격 : <input type="text" name="bprice" id="bprice"/>
+	<button type="button" id="send" style="width: 10%;">입찰하기</button>
+	<hr />
+	<!--입찰하기 버튼 클릭시  -->
+	<script>
+			document.getElementById("send").onclick = function() {
+				var xhr = new XMLHttpRequest();
+				xhr.open("post", "/auction/add", true);
+				var data = {
+					"pno" : ${pmap.NO },
+					"bprice" : document.getElementById("bprice").value
+				};
+				xhr.send(JSON.stringify(data));
+				xhr.onreadystatechange = function() {
+					if (this.readyState == 4) {
+						var obj = JSON.parse(this.responseText);
+						if (obj.result == 1) {
+							window.alert("등록되었습니다.");
+							document.getElementById("sprice").value = "";
+							//getList();
+						} else if(obj.result==0){
+							window.alert("등록 과정에서 문제가 발생하였습니다.");
+						} else {
+							window.alert("댓글 등록후 30초간 새 댓글을 등록할수 없습니다.");
+						}
+					}
+				}
+			}
+		</script>
+		
 	<h2>입찰기록</h2>
+	<div id="bidlist" align="left" style="width: 70%;"></div>
+	<!--입찰기록  -->
+	<script>
+	var getList  = function() {
+		var xhr = new XMLHttpRequest();
+		xhr.open("post", "/auction/list/"+ document.getElementById("no").value, true);
+		xhr.onreadystatechange = function() {
+			if (this.readyState == 4) {
+				var obj = JSON.parse(this.responseText);
+				console.log(obj);
+				var html="";
+				for(idx in obj) {
+					html += "→  입찰자 ID : " +obj[idx].BID+"  /  입찰가 : "+obj[idx].BPRICE +" / 입찰일 : " +obj[idx].BDATE +"<br/>";
+				}
+				document.getElementById("bidlist").innerHTML = html;
+			}
+		}
+		xhr.send();
+	}
+	getList();
+	
+	</script>
 
 </div>
 

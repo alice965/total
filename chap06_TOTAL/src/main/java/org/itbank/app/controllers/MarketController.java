@@ -36,7 +36,8 @@ public class MarketController {
 	}
 	
 	@PostMapping("/add")
-	public String addPostHandle(@RequestParam Map param, ModelMap map) {
+	public String addPostHandle(@RequestParam Map param, ModelMap map, HttpSession session) {
+		param.put("id", session.getAttribute("auth_id"));
 		int rst = mDAO.addProduct(param);
 		if(rst== 1) {
 			map.put("section", "market/list");
