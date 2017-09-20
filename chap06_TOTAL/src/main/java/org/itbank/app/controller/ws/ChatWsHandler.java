@@ -32,10 +32,13 @@ public class ChatWsHandler extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		System.out.println("afterConnectionEstablished");
 		list.add(session);
-		String json = String.format("{\"mode\":\"join\", \"cnt\":%d }", list.size());
+		String json = String.format("{\"mode\":\"join\", \"cnt\":%d ,\"user\" : \"%s\"}", list.size(),
+				"사용자" + session.getId());
 		System.out.println(json +" at afterConnectionEstablished." );
 		for(WebSocketSession wss : list) {
-			wss.sendMessage(new TextMessage(json));
+			if(wss != session) {
+				wss.sendMessage(new TextMessage(json));
+			} 
 		}
 	}
 	
@@ -43,6 +46,12 @@ public class ChatWsHandler extends TextWebSocketHandler {
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		System.out.println("afterConnectionClosed");
 		list.remove(session);
+		String json = String.format("{\"mode\":\"exit\", \"cnt\":%d ,\"user\" : \"%s\"}", list.size(),
+				"사용자" + session.getId());
+		System.out.println(json + " at afterConnectionEstablished.");
+		for (WebSocketSession wss : list) {
+				wss.sendMessage(new TextMessage(json));
+		}
 		
 	}
 	

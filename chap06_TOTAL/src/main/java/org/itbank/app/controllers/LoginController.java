@@ -4,6 +4,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.itbank.app.models.MemberDaoMyBatis;
@@ -42,12 +45,38 @@ public class LoginController {
 			mav.addObject("section", "login");
 			mav.addObject("temp", "temp");
 			/*
-			mav.setViewName("redirect:/login");
+			mav.setViewName("redirewct:/login");
 			mav.addObject("mode", "f");
 			*/
 		}
 		return mav;
 	}
+	@RequestMapping("/logout")
+	   public ModelAndView logoutHandle(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
+	      session.invalidate();
+	      
+	      Cookie[] ar= request.getCookies();
+	      Map<String, String> ckmap = new HashMap<>();
+	      if(ar != null) {
+	          for(Cookie c:ar) {
+	             ckmap.put(c.getName(), c.getValue());
+	          }
+	          
+	          if(ckmap.containsKey("auth")) {
+	            Cookie c = new Cookie("auth","1");
+	            c.setMaxAge(0);
+	            c.setPath("/");
+	            response.addCookie(c);
+	            
+	          }
+	      }else {
+	          System.out.println("ƒÌ≈∞ªË¡¶æ»µ ....");
+	      }
+	      
+	      ModelAndView mav = new ModelAndView("redirect:/");
+	      //mav.addObject("rst", rst);
+	      return mav;
+	   }
 }
 
 

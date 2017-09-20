@@ -19,16 +19,19 @@
 	
 	ws.onopen = function(e){
 		document.getElementById("log").innerHTML += "<p><b>-----오픈채팅 서버 접속 성공-----</b></p>";
-		console.log("e : " +e);
+		var obj = JSON.parse(e.data);
+		document.getElementById("cnt").innerHTML = "<small>[ " + obj.cnt+ " ] 명</small>";
 	}
 	ws.onmessage = function(a){
 		console.log("a : "+a.data);
 		var obj = JSON.parse(a.data);
-		console.log(obj.mode);
+			document.getElementById("cnt").innerHTML = "<small>[ " + obj.cnt+ " ] 명</small>";
 		if(obj.mode == "join"){
-			var html = "새로운 참여자 채팅방 입장 <br>";
-				document.getElementById("cnt").innerHTML = "<small>[ " + obj.cnt+ " ] 명</small>";
-		}else{
+			var html = obj.user + "채팅방 입장 <br>";
+		}else if(obj.mode =="exit"){
+			var html = "<b>[ "+obj.user+ "]</b>님이 퇴장하셨습니다.<br>" ;
+		}
+		else{
 			var html = "<b>[ "+obj.sender+ "]</b>"+obj.msg +"<br>" ;
 		}
 		

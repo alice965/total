@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
+import org.itbank.app.controller.ws.AlertWSHandler;
 import org.itbank.app.models.BoardDaoMyBatis;
 
 @Controller
@@ -25,6 +25,9 @@ import org.itbank.app.models.BoardDaoMyBatis;
 public class BoardController {
 	@Autowired
 	BoardDaoMyBatis bDAO;
+	
+	@Autowired
+	AlertWSHandler aws;
 
 	@RequestMapping("/list")
 	public ModelAndView boardListHandle(@RequestParam(name="page", defaultValue="1" ) int page) throws SQLException {
@@ -59,6 +62,7 @@ public class BoardController {
 	public String boardAddPostHandle(@RequestParam Map param, ModelMap map) throws SQLException {
 		int rst = bDAO.createOne(param);
 		if (rst == 1) {
+			aws.sendMessage("새로운 글이 등록되었습니다."); 
 			map.put("section", "board/list");
 			return "redirect:/board/list";
 		}
