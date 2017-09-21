@@ -5,7 +5,7 @@
 	<p id="alt"></p>
 </div>
 <script>
-	var aws = new WebSocket("ws://192.168.219.101/ws/alert");
+	var aws = new WebSocket("ws://192.168.10.78/ws/alert");
 	
 	aws.onmessage = function(a){
 		window.alert(a.data);

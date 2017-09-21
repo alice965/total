@@ -55,7 +55,7 @@ input, textarea, button {
 					"parent" : ${one.NUM },
 					"writer" : document.getElementById("writer").value,
 					"pass" : document.getElementById("pass").value,
-					"content" : document.getElementById("content").value,
+					"content" : document.getElementById("content").value
 				};
 				xhr.send(JSON.stringify(data));
 				xhr.onreadystatechange = function() {
@@ -74,7 +74,7 @@ input, textarea, button {
 						}
 					}
 				}
-			}
+			};
 		</script>
 	</div>
 	<div id="reps" align="left" style="width: 70%;"></div>

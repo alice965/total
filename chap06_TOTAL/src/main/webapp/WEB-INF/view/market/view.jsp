@@ -42,33 +42,34 @@ input, textarea, button {
 	<hr />
 	<h2>입찰하기</h2>
 	입찰가격 : <input type="text" name="bprice" id="bprice"/>
-	<button type="button" id="send" style="width: 10%;">입찰하기</button>
+	<button type="button" id="send" style="width: 10%;">입찰</button>
 	<hr />
 	<!--입찰하기 버튼 클릭시  -->
 	<script>
 			document.getElementById("send").onclick = function() {
+				var bprice =document.getElementById("bprice").value;
 				var xhr = new XMLHttpRequest();
 				xhr.open("post", "/auction/add", true);
 				var data = {
 					"pno" : ${pmap.NO },
 					"bprice" : document.getElementById("bprice").value
-				};
+				}
 				xhr.send(JSON.stringify(data));
 				xhr.onreadystatechange = function() {
 					if (this.readyState == 4) {
 						var obj = JSON.parse(this.responseText);
 						if (obj.result == 1) {
 							window.alert("등록되었습니다.");
-							document.getElementById("sprice").value = "";
-							//getList();
+							document.getElementById("sprice").value = bprice;
+							getList();
 						} else if(obj.result==0){
-							window.alert("등록 과정에서 문제가 발생하였습니다.");
+							window.alert("입찰 등록 과정에서 문제가 발생하였습니다.");
 						} else {
-							window.alert("댓글 등록후 30초간 새 댓글을 등록할수 없습니다.");
+							window.alert("입찰 후 30초간 새 입찰을 등록할수 없습니다.");
 						}
 					}
 				}
-			}
+			};
 		</script>
 		
 	<h2>입찰기록</h2>
@@ -84,7 +85,9 @@ input, textarea, button {
 				console.log(obj);
 				var html="";
 				for(idx in obj) {
-					html += "→  입찰자 ID : " +obj[idx].BID+"  /  입찰가 : "+obj[idx].BPRICE +" / 입찰일 : " +obj[idx].BDATE +"<br/>";
+					// console.log(obj[idx].BDATE +" / " +typeof obj[idx].BDATE);
+					var d = new Date(obj[idx].BDATE);
+					html += "→  입찰자 ID : " +obj[idx].BID+"  /  입찰가 : "+obj[idx].BPRICE +" / 입찰일 : "+d+"<br/>";
 				}
 				document.getElementById("bidlist").innerHTML = html;
 			}

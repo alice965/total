@@ -22,10 +22,11 @@
 </div>
 <c:if test="${!empty auth }">
    <script>
-      var userws = new WebSocket("ws://192.168.219.101/ws/login");
+      var userws = new WebSocket("ws://192.168.10.78/ws/login");
       userws.onmessage=function(e){
          console.log(e.data);
          var obj = JSON.parse(e.data);
+         console.log(obj);
          switch(obj.mode){
          case "memo" :
             var msg = "["+obj.sender+"]님 으로 부터 새로운 쪽지가 도착했습니다.";

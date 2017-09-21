@@ -44,7 +44,7 @@ public class AuctionController {
 		}else {				// 비딩제한 쿠키가 없을 때
 			Map map = mapper.readValue(body, Map.class);
 				map.put("bid", session.getAttribute("auth_id"));
-				System.out.println("map : " + map);
+				System.out.println("bid map : " + map);
 			int r = aDAO.addAuction(map);
 			data.put("rst", r);
 			String msg = String.format("{\"mode\":\"auction\",\"bidder\":\"%s\"}", session.getAttribute("auth_id"));
